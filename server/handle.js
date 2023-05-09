@@ -12,7 +12,7 @@ export function post(req, res) {
     console.log('speed type:' + typeof toInt.speed);
     console.log('temp type' + typeof toInt.temp);
     uploadSpeedAndTemp(toInt);
-    // // rsremoveData();
+    removeData();
     getAvgSpeed();
     latestTemp = toInt.temp;
 }
@@ -33,15 +33,15 @@ function uploadSpeedAndTemp(obj) {
     db.push(entry);
 }
 
-// function removeData() {
-//     const now = new Date();
-//     const was = new Date(now.getTime() - 1*6000);
-//     for (const i=0; i<db.length-1, i++;) {
-//         if(db[i].time.getTime() <= was.getTime()) {
-//             db.splice(i, 1);
-//         }
-//     }
-// }
+function removeData() {
+    const now = new Date();
+    const was = new Date(now.getTime() - 1*6000);
+    for (let i=0; i<db.length-1, i++;) {
+        if(db[i].time.getTime() <= was.getTime()) {
+            db.splice(i, 1);
+        }
+    }
+}
 
 function getAvgSpeed() {
     const speed = [];
