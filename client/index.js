@@ -3,23 +3,43 @@ import { pushNo, pushLight, pushHeavy } from "./dummy.js";
 const speed = document.querySelector('#speed');
 const temp = document.querySelector('#temp');
 const traffic = document.querySelector('#traffic');
+const condition = document.querySelector('#condition');
 
-function getSpeed() {
-    return fetch('speed').then(response => {
-        if (!response.ok) {
-          throw new Error('Not found');
-        }
-        return response.json();
-    });
-}
+// function getSpeed() {
+//     return fetch('speed').then(response => {
+//         if (!response.ok) {
+//           throw new Error('Not found');
+//         }
+//         return response.json();
+//     });
+// }
 
-function getTemp() {
-    return fetch('temp').then(response => {
+// function getTemp() {
+//     return fetch('temp').then(response => {
+//         if (!response.ok) {
+//             throw new Error('not found');
+//         }
+//         return response.json();
+//     });
+// }
+
+function fetchData(data) {
+    return fetch(data).then(response => {
         if (!response.ok) {
             throw new Error('not found');
         }
         return response.json();
     });
+}
+
+async function roadCondition() {
+    const id = await fetchData('weatherID');
+    const idINt = parseInt(id)-700;
+    if (idINt < 0) {
+        condition.textContent = "Caution! Roads are wet and/or dangerous. ";
+    } else {
+        condition.textContent = "Road Conditions are normal";
+    }
 }
 
 function trafficUpdate(avgSpeed) {
@@ -35,8 +55,9 @@ function trafficUpdate(avgSpeed) {
 }
 
 setInterval(async () => {
-    const newTemp = await getTemp();
-    const newSpeed = await getSpeed();
+    const newTemp = await fetchData('temp')
+    const newSpeed = await fetchData('speed');
+    await roadCondition();
     speed.textContent = newSpeed;
     temp.textContent=newTemp;
     traffic.textContent=trafficUpdate(await newSpeed);

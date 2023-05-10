@@ -2,15 +2,13 @@ const db = [];
 let latestTemp = 0;
 let avgSpeed = 0;
 
-export function post(req, res) {
+export function post(req, res) { 
     const data = req.body;
     const toInt = {
         'speed': parseInt(data.speed),
         'temp': parseInt(data.temp),
     };
     uploadSpeedAndTemp(toInt);
-    removeData();
-    getAvgSpeed();
     latestTemp = toInt.temp;
 }
 
@@ -49,3 +47,8 @@ function getAvgSpeed() {
     const average = sum/ speed.length;
     avgSpeed = Math.round(average);
 }
+
+setInterval(() => {
+    removeData();
+    getAvgSpeed();
+}, 10000);
