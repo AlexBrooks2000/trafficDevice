@@ -13,7 +13,7 @@ app.use(express.static('client'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.post('/testPost', post);
+app.post('/sendData', post);
 app.get('/speed', getSpeed);
 app.get('/temp', getTemp);
 

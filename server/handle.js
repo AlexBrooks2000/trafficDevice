@@ -8,9 +8,6 @@ export function post(req, res) {
         'speed': parseInt(data.speed),
         'temp': parseInt(data.temp),
     };
-    console.log(toInt);
-    console.log('speed type:' + typeof toInt.speed);
-    console.log('temp type' + typeof toInt.temp);
     uploadSpeedAndTemp(toInt);
     removeData();
     getAvgSpeed();
@@ -50,5 +47,5 @@ function getAvgSpeed() {
     }
     const sum = speed.reduce((acc, num) => acc + num, 0);
     const average = sum/ speed.length;
-    avgSpeed = average;
+    avgSpeed = Math.round(average);
 }
