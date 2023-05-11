@@ -12,6 +12,16 @@ export function post(req, res) {
     latestTemp = toInt.temp;
 }
 
+export function getWeather(req, res) {
+    request(url, { json: true }, (err, apiRes, body) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('An error occurred');
+        }
+        res.json(body.weather[0].id);
+    }); 
+}
+
 export function getSpeed(req, res) {
     res.json(avgSpeed);
 }
