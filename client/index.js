@@ -5,24 +5,6 @@ const temp = document.querySelector('#temp');
 const traffic = document.querySelector('#traffic');
 const condition = document.querySelector('#condition');
 
-// function getSpeed() {
-//     return fetch('speed').then(response => {
-//         if (!response.ok) {
-//           throw new Error('Not found');
-//         }
-//         return response.json();
-//     });
-// }
-
-// function getTemp() {
-//     return fetch('temp').then(response => {
-//         if (!response.ok) {
-//             throw new Error('not found');
-//         }
-//         return response.json();
-//     });
-// }
-
 function fetchData(data) {
     return fetch(data).then(response => {
         if (!response.ok) {
@@ -43,7 +25,7 @@ async function roadCondition() {
 }
 
 function trafficUpdate(avgSpeed) {
-    if (avgSpeed > 20 && avgSpeed <=30 ) {
+    if (avgSpeed > 20) {
         return "No congestion";
     } else if (avgSpeed > 10 && avgSpeed <= 20) {
         return ("Light congestion")
@@ -55,11 +37,11 @@ function trafficUpdate(avgSpeed) {
 }
 
 setInterval(async () => {
-    const newTemp = await fetchData('temp')
+    const newTemp = await fetchData('temp');
     const newSpeed = await fetchData('speed');
     await roadCondition();
-    speed.textContent = newSpeed;
-    temp.textContent=newTemp;
+    speed.textContent = await newSpeed;
+    temp.textContent = await newTemp;
     traffic.textContent=trafficUpdate(await newSpeed);
 }, 5000);
 

@@ -73,11 +73,13 @@ void setup() {
   pinMode(TRIG_PIN, OUTPUT); // Set trigger pin as output
   pinMode(ECHO_PIN, INPUT); // Set echo pin as input
   dht.begin(); // BEgins taking readings from DHT sesnor
+  pinMode(3, OUTPUT);
 }
 
 void loop() {
   getSpeed();
   getTemp();
+  // digitalWrite(3, HIGH);
 
   finalSpeed = getSpeed();
   finalTemp = getTemp();
@@ -87,5 +89,16 @@ void loop() {
   Serial.print(finalSpeed);
   Serial.print(",");
   Serial.println(finalTemp);
-  delay(3000);
+
+  while (Serial.available()) {
+    char val = Serial.read();
+    int no = atoi(val);
+    if (no < 700) {
+      digitalWrite(3, HIGH);
+    } else {
+      digitalWrite(3, LOW);
+    }
+  }
+
+
 }

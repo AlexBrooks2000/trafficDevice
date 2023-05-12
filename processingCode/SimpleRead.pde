@@ -32,16 +32,15 @@ void draw()
     }
 
   }
-   delay(3000);
    
    smooth();
    
-   GetRequest get= new GetRequest("http://localhost:3000/test");
+   GetRequest get= new GetRequest("http://localhost:3000/weatherID");
    get.send();
    String result = get.getContent();
-   int no = parseInt(result)-700;
-   if (no < 0) {
-     myPort.write(1);
-   }
-   delay(1000);
+   int no = parseInt(result);
+
+   myPort.write(no);
+
+
 }

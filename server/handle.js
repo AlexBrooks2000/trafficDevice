@@ -1,3 +1,13 @@
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
+const request = require('request');
+require('dotenv').config();
+
+const apiKey = process.env.API_KEY;
+const city = 'Portsmouth';
+const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
 const db = [];
 let latestTemp = 0;
 let avgSpeed = 0;
@@ -8,6 +18,7 @@ export function post(req, res) {
         'speed': parseInt(data.speed),
         'temp': parseInt(data.temp),
     };
+    console.log(toInt);
     uploadSpeedAndTemp(toInt);
     latestTemp = toInt.temp;
 }
@@ -20,6 +31,8 @@ export function getWeather(req, res) {
         }
         res.json(body.weather[0].id);
     }); 
+    //res.json(400);
+    // res.json(1000);
 }
 
 export function getSpeed(req, res) {
